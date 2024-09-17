@@ -1,0 +1,21 @@
+.idea
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Ignore init
+
+Wrapper
+VanillaMaterials
+MoseStream
+MaterialsListGenerator
+Skript
+Launch-Common
+Launch-External
+Launch-Internal
+Gradle-Annotations
+Common
+CollectionStream
+bukkit-api

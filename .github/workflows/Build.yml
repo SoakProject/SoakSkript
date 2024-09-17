@@ -1,0 +1,30 @@
+name: Build
+on: [ push, workflow_dispatch ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{matrix.java}}
+          cache: 'gradle'
+      - name: Make script executable
+        run: chmod +x ./init.sh
+      - name: Run script
+        run: bash ./init.sh
+      - name: Make gradle executable
+        run: chmod +x ./gradlew
+      - name: Build Skript
+        run: ./gradlew build
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: SkriptSoak.zip
+          path: build/libs/*.jar

@@ -1,0 +1,94 @@
+import java.util.stream.Collectors
+
+plugins {
+    id("java-library")
+}
+
+group = "org.soak.internal.skript"
+version = "1.0.0"
+
+java {
+    toolchain {
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+repositories {
+    maven {
+        url 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+
+}
+
+dependencies {
+    implementation 'org.spongepowered:spongeapi:10.0.0'
+    implementation project(':Launch-Internal')
+    implementation project(':Common')
+    implementation project(':Wrapper')
+    implementation project(':bukkit-api')
+
+    implementation 'net.minecraftforge:fmlcore:1.19.4-45.2.8'
+    implementation 'net.minecraftforge:forgespi:6.0.0'
+    implementation 'commons-lang:commons-lang:2.6' //included with bukkit -> forced onto forge
+
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+
+    dependsOn(":Launch-Internal:jar")
+    dependsOn(":bukkit-api:jarWithout")
+    dependsOn(":MoseStream:jar")
+    dependsOn(":CollectionStream:jar")
+    dependsOn(":VanillaMaterials:jar")
+
+    var fat = configurations.runtimeClasspath.filter {
+        return it.name.startsWith("bukkit-api")
+                || it.name.startsWith("Launch-Common")
+                || it.name.startsWith("Launch-Internal")
+                || it.name.startsWith("Common-")
+                || it.name.startsWith("Wrapper-")
+                || it.name.startsWith("MoseStream")
+                || it.name.startsWith("CollectionStream")
+                || it.name.startsWith("json-simple")
+                || it.name.startsWith("paperlib")
+                || it.name.startsWith("Skript")
+                || it.name.equals("commons-lang-2.6.jar")
+    }.collect {
+        return it.directory ? it : zipTree(it)
+    }
+    if (fat.size() != 9) {
+        throw new RuntimeException("Missing package: Found " + fat.size() + ".\n-" + fat.stream().map(i -> i.toString()).collect(Collectors.joining("\n- ")));
+    }
+
+    var materialFile = project.file("./VanillaMaterials/build/libs/VanillaMaterials-1.0.0.jar")
+    fat.add(zipTree(materialFile));
+
+    var skriptsFile = project.file("./Skript/build/libs/").listFiles()[0];
+    fat.add(skriptsFile);
+
+    from(fat).rename {
+        if (it.startsWith("Skript-") && it.endsWith(".jar")) {
+            return "Skript.jar"
+        }
+        return it;
+    }.exclude {
+        return it.name == "Compatibility.class" && !it.file.absolutePath.contains("zip_");
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url = 'https://repo.papermc.io/repository/maven-public/'
+        }
+    }
+}

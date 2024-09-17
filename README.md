@@ -1,4 +1,4 @@
-# Skript Sponge (standalone)
+# Soak Skript
 
 This is a standalone sponge plugin that launches the [SkriptLang](https://github.com/SkriptLang/Skript) bukkit plugin.
 
@@ -24,10 +24,12 @@ This is a high level **emulation** of the Bukkit plugin, this means the followin
 can do about it
 
 - Links for updates will point to the Bukkit plugins, not this version
-- Most plugins use the folder of '``./plugins/< pluginName >/``' for config files rather than Sponge's ''`./conf/< pluginId >/`'' and therefore this will too
+- Most plugins use the folder of '``./plugins/< pluginName >/``' for config files rather than Sponge's ''
+  `./conf/< pluginId >/`'' and therefore this will too
 - Skripts that use Bukkit exclusive features will be recognised, but will not work
 
-All issues should go to this version of SkriptLang rather than the official SkriptLang unless you can replicate it in the official version too
+All issues should go to this version of SkriptLang rather than the official SkriptLang unless you can replicate it in
+the official version too
 
 ## Permission to use
 
@@ -40,23 +42,34 @@ content
 
 ### Why no Sponge Forge support
 
-Bukkit uses fixed lists that need to be hard coded. These lists are used in many places including the [Material List](https://jd.papermc.io/paper/1.21.1/org/bukkit/Material.html) which contains all items and blocks within Vanilla minecraft. When it comes to forge (as well as any modded platform) mods typically will add blocks and/or items resulting in the Bukkit Material list and the actual block and item lists being different. 
+Bukkit uses fixed lists that need to be hard coded. These lists are used in many places including
+the [Material List](https://jd.papermc.io/paper/1.21.1/org/bukkit/Material.html) which contains all items and blocks
+within Vanilla minecraft. When it comes to forge (as well as any modded platform) mods typically will add blocks and/or
+items resulting in the Bukkit Material list and the actual block and item lists being different.
 
-There are ways to hack the java standards to add entries into these fixed lists however that will take time to write and may lead to stability issues.
+There are ways to hack the java standards to add entries into these fixed lists however that will take time to write and
+may lead to stability issues.
 
 #### Can i use Skripts on Sponge Forge if my mods don't add items or blocks?
 
-If you use Sponge Forge only because you wish to use a mod that doesn't add any blocks or items and doesn't already have a sponge plugin version (such as Dynmap) then in theory .... ``yes you can`` but any issues that are reported will probably be left until Sponge Forge work starts
+If you use Sponge Forge only because you wish to use a mod that doesn't add any blocks or items and doesn't already have
+a sponge plugin version (such as Dynmap) then in theory .... ``yes you can`` but any issues that are reported will
+probably be left until Sponge Forge work starts
 
 #### When will Sponge Forge support come?
 
-No date set to when the work starts, nor how long it will take. The focus is Sponge Vanilla and getting the stability of the emulator for at least SkriptLang in a good place
+No date set to when the work starts, nor how long it will take. The focus is Sponge Vanilla and getting the stability of
+the emulator for at least SkriptLang in a good place
 
 All I will say is its not likely going to be worked on until API 12 (1.21)
 
 ### Can i run on minecraft 1.X.Y
 
-Due to the complexity of emulating Bukkit, the emulator needs to be built for a specific Minecraft version and **shouldn't** be used on any other Minecraft version. All versions of Soak and the stand alone plugins will state what Sponge API they are built towards. You can find a [cheatsheet here](https://docs.spongepowered.org/stable/en/plugin/api-versions.html) to know what Minecraft version(s) they can run on
+Due to the complexity of emulating Bukkit, the emulator needs to be built for a specific Minecraft version and *
+*shouldn't** be used on any other Minecraft version. All versions of Soak and the stand alone plugins will state what
+Sponge API they are built towards. You can find
+a [cheatsheet here](https://docs.spongepowered.org/stable/en/plugin/api-versions.html) to know what Minecraft version(s)
+they can run on
 
 ### Why Skripts
 
